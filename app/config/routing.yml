@@ -1,3 +1,8 @@
+pf_agenda:
+    resource: "@PFAgendaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
