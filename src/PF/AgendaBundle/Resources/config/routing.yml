@@ -1,0 +1,7 @@
+pf_agenda_home:
+    path: /
+    defaults: { _controller: PFAgendaBundle:Default:index }
+
+pf_agenda_add_timeslot:
+    path: /timeslot/addtimeslot
+    defaults: { _controller: PFAgendaBundle:TimeSlot:addTimeSlot }

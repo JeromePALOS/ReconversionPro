@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TimeSlot
  *
- * @ORM\Table(name="time_slot")
+ * @ORM\Table(name="pf_agenda_time_slot")
  * @ORM\Entity(repositoryClass="PF\AgendaBundle\Repository\TimeSlotRepository")
  */
 class TimeSlot
@@ -22,15 +22,16 @@ class TimeSlot
     private $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\User")
-	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE"))
-	 */
+     * @var \String
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
 	private $conseille;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 

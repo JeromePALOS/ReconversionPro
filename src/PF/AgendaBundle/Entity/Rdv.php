@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rdv
  *
- * @ORM\Table(name="rdv")
+ * @ORM\Table(name="pf_agenda_rdv")
  * @ORM\Entity(repositoryClass="PF\AgendaBundle\Repository\RdvRepository")
  */
 class Rdv
@@ -24,7 +24,7 @@ class Rdv
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 

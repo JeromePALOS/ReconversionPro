@@ -1,7 +1,6 @@
-pf_agenda:
-    resource: "@PFAgendaBundle/Controller/"
-    type:     annotation
-    prefix:   /
+pf_bundle:
+    resource: "@PFAgendaBundle/Resources/config/routing.yml"
+    prefix:   /agenda
 
 app:
     resource: '@AppBundle/Controller/'
