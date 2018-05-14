@@ -5,3 +5,10 @@ pf_agenda_home:
 pf_agenda_add_timeslot:
     path: /timeslot/addtimeslot
     defaults: { _controller: PFAgendaBundle:TimeSlot:addTimeSlot }
+    
+pf_agenda_view_timeslot:
+    path: /timeslot/viewtimeslot/{conseille}
+    defaults: { _controller: PFAgendaBundle:TimeSlot:viewTimeSlot }
+    
+    
+    

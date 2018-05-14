@@ -72,28 +72,4 @@ class TimeSlot
     }
 
  
-
-    /**
-     * Set conseille
-     *
-     * @param \PF\AgendaBundle\Entity\User $conseille
-     *
-     * @return TimeSlot
-     */
-    public function setConseille(\PF\AgendaBundle\Entity\User $conseille)
-    {
-        $this->conseille = $conseille;
-
-        return $this;
-    }
-
-    /**
-     * Get conseille
-     *
-     * @return \PF\AgendaBundle\Entity\User
-     */
-    public function getConseille()
-    {
-        return $this->conseille;
-    }
 }

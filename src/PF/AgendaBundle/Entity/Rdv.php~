@@ -177,28 +177,5 @@ class Rdv
     {
         return $this->status;
     }
-
-    /**
-     * Set timeslot
-     *
-     * @param \PF\AgendaBundle\Entity\TimeSlot $timeslot
-     *
-     * @return Rdv
-     */
-    public function setTimeslot(\PF\AgendaBundle\Entity\TimeSlot $timeslot)
-    {
-        $this->timeslot = $timeslot;
-
-        return $this;
-    }
-
-    /**
-     * Get timeslot
-     *
-     * @return \PF\AgendaBundle\Entity\TimeSlot
-     */
-    public function getTimeslot()
-    {
-        return $this->timeslot;
-    }
 }
+

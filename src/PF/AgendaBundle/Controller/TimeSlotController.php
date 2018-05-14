@@ -46,4 +46,36 @@ class TimeSlotController extends Controller
 			)
 		);
 	}
+	
+	
+	
+	public function viewTimeSlotAction($conseille){
+
+		$em = $this->getDoctrine()->getManager();
+	
+		$listTimeSlot = $em
+			->getRepository('PFAgendaBundle:TimeSlot')
+			->findBy(
+				array('conseille' => $conseille), // Critere
+				array('date' => 'asc')
+			)
+		;
+		
+		return $this->render('PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig', array(
+		  'listTimeSlot' => $listTimeSlot,
+		  'user' => $this->getUser(),
+		));
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

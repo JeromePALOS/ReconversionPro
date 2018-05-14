@@ -1,0 +1,37 @@
+{% extends "PFAgendaBundle::layout.html.twig" %}
+
+
+{% block title %}
+	{{ parent() }} | TimeSlot
+{% endblock %}
+
+{% block body %}
+	{{dump(user)}}
+		<table class="table table-hover" id="table-timeslot">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Date</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for timeslot in listTimeSlot %}
+					<tr>
+						<th scope="row">{{ loop.index }}</th>
+						<td>
+							{{ timeslot.date|date('d/m/Y H:i') }}
+						</td>
+						<td>
+							
+						</td>
+					
+					</tr>
+				{% endfor %}			
+
+			</tbody>
+		</table>
+
+
+{% endblock %}
+
