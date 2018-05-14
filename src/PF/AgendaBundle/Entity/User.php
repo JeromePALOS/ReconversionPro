@@ -3,86 +3,31 @@
 namespace PF\AgendaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+
 
 /**
- * User
- *
+ * @ORM\Entity
  * @ORM\Table(name="pf_agenda_user")
- * @ORM\Entity(repositoryClass="PF\AgendaBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255)
-     */
-    private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255)
-     */
-    private $role;
+	 /**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	 protected $id;
 
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+
+	public function __construct()
     {
-        return $this->id;
+        parent::__construct();
     }
+	
+	
 
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return User
-     */
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    /**
-     * Get nom
-     *
-     * @return string
-     */
-    public function getNom()
-    {
-        return $this->nom;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return User
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     /**
      * Get role
@@ -94,4 +39,3 @@ class User
         return $this->role;
     }
 }
-
