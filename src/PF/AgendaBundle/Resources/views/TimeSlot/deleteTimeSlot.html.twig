@@ -1,0 +1,25 @@
+{# src/PF/AgendaBundle/Resources/views/Agenda/deleteRdv.html.twig #}
+
+{% extends "PFAgendaBundle::layout.html.twig" %}
+
+{% block title %}
+	Supprimer Timeslot | {{ parent() }} 
+{% endblock %}
+
+{% block body %}
+
+  <h2>Delete a project</h2>
+
+    <p> Supprimer votre créneaux horaire ?  </p>
+
+
+  <form action="{{ path('pf_agenda_delete_timeslot', {'idtimeslot': timeslot.id}) }}" method="post">
+    <a href="{{ path('pf_agenda_view_timeslot', {'conseille': timeslot.conseille.id}) }}" class="btn btn-default">
+      < Back
+    </a>
+    <input type="submit" value="Supprimer" class="btn-blue" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}
