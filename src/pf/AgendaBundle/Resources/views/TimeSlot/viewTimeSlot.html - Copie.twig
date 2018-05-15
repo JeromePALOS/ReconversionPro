@@ -1,0 +1,149 @@
+{% extends "PFAgendaBundle::layout.html.twig" %}
+
+
+{% block title %}
+	{{ parent() }} | TimeSlot
+{% endblock %}
+
+
+
+
+
+{% block stylesheets %}
+
+{{parent()}}
+<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.css') }}" rel='stylesheet' />
+<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
+
+
+
+
+{% endblock %}
+{% block body %}
+{{parent()}}
+
+  <div id='calendar'></div>
+
+
+
+
+<script src="{{ asset('assets/plugin/fullcalendar/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.3.3.1.js') }}"></script>
+<script src="{{ asset('assets/plugin/fullcalendar/fullcalendar.js') }}"></script>
+<script>
+
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+      },
+
+      navLinks: true, // can click day/week names to navigate views
+      events: [
+					{% for timeslot in listTimeSlot %}
+						{
+						
+							
+							{% if timeslot.conseille == user.username %}
+								//ses propre timeslot
+								{% if  timeslot.rdv|length > 0 %}
+									{% for rdv in timeslot.rdv %}
+										start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+										end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+										backgroundColor: '#1e395a',
+										borderColor : '#1e395a',
+										textColor: 'white',
+										title: '{{ rdv.candidat }} - {{ rdv.typeRdv }}',
+										{% endfor %}
+									{% endif %}
+							{% elseif user.roles == 'candidat' %}	
+									//si timeslot deja prit
+								{% if  timeslot.rdv|length > 0 %}
+									{% for rdv in timeslot.rdv %}
+										start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+										end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+										{% if rdv.status == 'En attente' and user.username == rdv.candidat %}
+											backgroundColor: '#4A9130',
+											borderColor : '#4A9130',
+											textColor: 'white',
+											title: '{{ rdv.candidat }} - {{ rdv.typeRdv }}',
+											
+										{% elseif rdv.status == 'Validate' and user.username == rdv.candidat %}
+											backgroundColor: '#4A9130',
+											borderColor : '#4A9130',
+											textColor: 'white',
+											title: '{{ rdv.candidat }} - {{ rdv.typeRdv }}',
+											
+										{% elseif rdv.status == 'Refuse' and user.username == rdv.candidat %}
+											backgroundColor: '#CC0000',
+											borderColor : '#CC0000',
+											textColor: 'white',	
+											title: '{{ rdv.candidat }} - {{ rdv.typeRdv }}',		
+											
+										{% else %}
+											backgroundColor: 'transparent',
+											borderColor : '#1e395a',
+											textColor: '#1e395a',
+											url: '{{ path('escp_project_add_rdv', {'owner': stepRdv.project.owner, 'id': stepRdv.project.id, 'idsteprdv': stepRdv.id, 'idtimeslot': timeslot.id }) }}', 								
+											title: 'click to reserve',
+											
+										{% endif %}
+									{% endfor %}
+										
+								{% else %}
+											start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+											end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+											backgroundColor: 'transparent',
+											borderColor : '#1e395a',
+											textColor: '#1e395a',
+											url: '{{ path('escp_project_add_rdv', {'owner': stepRdv.project.owner, 'id': stepRdv.project.id, 'idsteprdv': stepRdv.id, 'idtimeslot': timeslot.id }) }}', 								
+											title: 'click to reserve',
+								{% endif %}
+							{% endif %}
+						},
+					{% endfor %}
+				]
+    });
+
+  });
+
+</script>
+<table class="table table-hover" id="table-timeslot">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Date</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for timeslot in listTimeSlot %}
+					<tr>
+						<th scope="row">{{ loop.index }}</th>
+						<td>
+							{{ timeslot.date|date('d/m/Y H:i') }}
+						</td>
+						<td>
+							{% if timeslot.rdv|length > 0 %}
+								{% for rdv in timeslot.rdv %}
+									{% if rdv.candidat == user %}
+										{{ rdv.status }}
+									{% endif %}
+									
+								{% endfor %}
+							{% else %}
+								<a class="btn-blue" aria-label="reserve this time slot" href="{{ path('pf_agenda_add_rdv', {'idtimeslot': timeslot.id, 'typerdv': 'skype' }) }}">Reserve Skype</a>
+							{% endif %}
+						</td>
+					
+					</tr>{{ dump(timeslot)}}
+				{% endfor %}			
+
+			</tbody>
+		</table>
+
+{% endblock %}
+

@@ -103,6 +103,6 @@ class __TwigTemplate_ac02a8a693874a5f0444b718ecabd4173a8f7dabd188a3c3d6f89625a67
     <p><a href=\"{{ targetUrl }}\">{{ 'registration.back'|trans }}</a></p>
     {% endif %}
 {% endblock fos_user_content %}
-", "@FOSUser/Registration/confirmed.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\symfony\\reconversionPro\\vendor\\friendsofsymfony\\user-bundle\\Resources\\views\\Registration\\confirmed.html.twig");
+", "@FOSUser/Registration/confirmed.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\ReconversionPro\\vendor\\friendsofsymfony\\user-bundle\\Resources\\views\\Registration\\confirmed.html.twig");
     }
 }
