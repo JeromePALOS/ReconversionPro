@@ -11,6 +11,7 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
         $this->parent = $this->loadTemplate("PFAgendaBundle::layout.html.twig", "PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
+            'stylesheets' => array($this, 'block_stylesheets'),
             'body' => array($this, 'block_body'),
         );
     }
@@ -59,7 +60,43 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 
     }
 
-    // line 8
+    // line 12
+    public function block_stylesheets($context, array $blocks = array())
+    {
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "stylesheets"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "stylesheets"));
+
+        // line 13
+        echo "
+";
+        // line 14
+        $this->displayParentBlock("stylesheets", $context, $blocks);
+        echo "
+<link href=\"";
+        // line 15
+        echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\AssetExtension')->getAssetUrl("assets/plugin/fullcalendar/fullcalendar.css"), "html", null, true);
+        echo "\" rel='stylesheet' />
+<link href=\"";
+        // line 16
+        echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\AssetExtension')->getAssetUrl("assets/plugin/fullcalendar/fullcalendar.print.css"), "html", null, true);
+        echo "\" rel='stylesheet' media='print' />
+
+
+
+
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 22
     public function block_body($context, array $blocks = array())
     {
         $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
@@ -68,9 +105,83 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "body"));
 
-        // line 9
+        // line 23
+        $this->displayParentBlock("body", $context, $blocks);
         echo "
-\t\t<table class=\"table table-hover\" id=\"table-timeslot\">
+
+  <div id='calendar'></div>
+
+
+
+
+<script src=\"";
+        // line 30
+        echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\AssetExtension')->getAssetUrl("assets/plugin/fullcalendar/moment.min.js"), "html", null, true);
+        echo "\"></script>
+<script src=\"";
+        // line 31
+        echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\AssetExtension')->getAssetUrl("assets/js/jquery.3.3.1.js"), "html", null, true);
+        echo "\"></script>
+<script src=\"";
+        // line 32
+        echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\AssetExtension')->getAssetUrl("assets/plugin/fullcalendar/fullcalendar.js"), "html", null, true);
+        echo "\"></script>
+<script>
+
+  \$(document).ready(function() {
+
+    \$('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+      },
+
+      navLinks: true, // can click day/week names to navigate views
+      events: [
+\t\t\t\t\t";
+        // line 46
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["listTimeSlot"]) ? $context["listTimeSlot"] : $this->getContext($context, "listTimeSlot")));
+        foreach ($context['_seq'] as $context["_key"] => $context["timeslot"]) {
+            // line 47
+            echo "\t\t\t\t\t\t{
+\t\t\t\t\t\t
+\t\t\t\t\t\t\t
+\t\t\t\t\t\t\t";
+            // line 50
+            if (($this->getAttribute($context["timeslot"], "conseille", array()) == $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "username", array()))) {
+                // line 51
+                echo "\t\t\t\t\t\t\t\t//ses propre timeslot
+\t\t\t\t\t\t\t\t\t
+\t\t\t\t\t\t\t\t\t\tstart: '";
+                // line 53
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($context["timeslot"], "date", array()), "Y-m-d\\TH:i:s"), "html", null, true);
+                echo "',
+\t\t\t\t\t\t\t\t\t\tend: '";
+                // line 54
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($context["timeslot"], "date", array()), "Y-m-d\\TH:i:s"), "html", null, true);
+                echo "',
+\t\t\t\t\t\t\t\t\t\tbackgroundColor: '#00B2ED',
+\t\t\t\t\t\t\t\t\t\tborderColor : '#00B2ED',
+\t\t\t\t\t\t\t\t\t\ttextColor: 'white',
+\t\t\t\t\t\t\t";
+            }
+            // line 59
+            echo "\t\t\t\t\t\t},
+\t\t\t\t\t";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['timeslot'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 61
+        echo "\t\t\t\t]
+    });
+
+  });
+
+</script>
+<table class=\"table table-hover\" id=\"table-timeslot\">
 \t\t\t<thead>
 \t\t\t\t<tr>
 \t\t\t\t\t<th scope=\"col\">#</th>
@@ -80,7 +191,7 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 \t\t\t</thead>
 \t\t\t<tbody>
 \t\t\t\t";
-        // line 19
+        // line 76
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["listTimeSlot"]) ? $context["listTimeSlot"] : $this->getContext($context, "listTimeSlot")));
         $context['loop'] = array(
@@ -97,57 +208,57 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
             $context['loop']['last'] = 1 === $length;
         }
         foreach ($context['_seq'] as $context["_key"] => $context["timeslot"]) {
-            // line 20
+            // line 77
             echo "\t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"row\">";
-            // line 21
+            // line 78
             echo twig_escape_filter($this->env, $this->getAttribute($context["loop"], "index", array()), "html", null, true);
             echo "</th>
 \t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t";
-            // line 23
+            // line 80
             echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($context["timeslot"], "date", array()), "d/m/Y H:i"), "html", null, true);
             echo "
 \t\t\t\t\t\t</td>
 \t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t";
-            // line 26
+            // line 83
             if ((twig_length_filter($this->env, $this->getAttribute($context["timeslot"], "rdv", array())) > 0)) {
-                // line 27
+                // line 84
                 echo "\t\t\t\t\t\t\t\t";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable($this->getAttribute($context["timeslot"], "rdv", array()));
                 foreach ($context['_seq'] as $context["_key"] => $context["rdv"]) {
-                    // line 28
+                    // line 85
                     echo "\t\t\t\t\t\t\t\t\t";
                     if (($this->getAttribute($context["rdv"], "candidat", array()) == (isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")))) {
-                        // line 29
+                        // line 86
                         echo "\t\t\t\t\t\t\t\t\t\t";
                         echo twig_escape_filter($this->env, $this->getAttribute($context["rdv"], "status", array()), "html", null, true);
                         echo "
 \t\t\t\t\t\t\t\t\t";
                     }
-                    // line 31
+                    // line 88
                     echo "\t\t\t\t\t\t\t\t\t
 \t\t\t\t\t\t\t\t";
                 }
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['rdv'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 33
+                // line 90
                 echo "\t\t\t\t\t\t\t";
             } else {
-                // line 34
+                // line 91
                 echo "\t\t\t\t\t\t\t\t<a class=\"btn-blue\" aria-label=\"reserve this time slot\" href=\"";
                 echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\RoutingExtension')->getPath("pf_agenda_add_rdv", array("idtimeslot" => $this->getAttribute($context["timeslot"], "id", array()), "typerdv" => "skype")), "html", null, true);
                 echo "\">Reserve Skype</a>
 \t\t\t\t\t\t\t";
             }
-            // line 36
+            // line 93
             echo "\t\t\t\t\t\t</td>
 \t\t\t\t\t
 \t\t\t\t\t</tr>";
-            // line 38
+            // line 95
             echo $this->env->getExtension('Symfony\Bridge\Twig\Extension\DumpExtension')->dump($this->env, $context, $context["timeslot"]);
             echo "
 \t\t\t\t";
@@ -163,12 +274,11 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['timeslot'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 39
+        // line 96
         echo "\t\t\t
 
 \t\t\t</tbody>
 \t\t</table>
-
 
 ";
         
@@ -191,7 +301,7 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 
     public function getDebugInfo()
     {
-        return array (  167 => 39,  151 => 38,  147 => 36,  141 => 34,  138 => 33,  131 => 31,  125 => 29,  122 => 28,  117 => 27,  115 => 26,  109 => 23,  104 => 21,  101 => 20,  84 => 19,  72 => 9,  63 => 8,  50 => 5,  41 => 4,  11 => 1,);
+        return array (  278 => 96,  262 => 95,  258 => 93,  252 => 91,  249 => 90,  242 => 88,  236 => 86,  233 => 85,  228 => 84,  226 => 83,  220 => 80,  215 => 78,  212 => 77,  195 => 76,  178 => 61,  171 => 59,  163 => 54,  159 => 53,  155 => 51,  153 => 50,  148 => 47,  144 => 46,  127 => 32,  123 => 31,  119 => 30,  109 => 23,  100 => 22,  84 => 16,  80 => 15,  76 => 14,  73 => 13,  64 => 12,  51 => 5,  42 => 4,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -211,9 +321,66 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 \t{{ parent() }} | TimeSlot
 {% endblock %}
 
-{% block body %}
 
-\t\t<table class=\"table table-hover\" id=\"table-timeslot\">
+
+
+
+{% block stylesheets %}
+
+{{parent()}}
+<link href=\"{{ asset('assets/plugin/fullcalendar/fullcalendar.css') }}\" rel='stylesheet' />
+<link href=\"{{ asset('assets/plugin/fullcalendar/fullcalendar.print.css') }}\" rel='stylesheet' media='print' />
+
+
+
+
+{% endblock %}
+{% block body %}
+{{parent()}}
+
+  <div id='calendar'></div>
+
+
+
+
+<script src=\"{{ asset('assets/plugin/fullcalendar/moment.min.js') }}\"></script>
+<script src=\"{{ asset('assets/js/jquery.3.3.1.js') }}\"></script>
+<script src=\"{{ asset('assets/plugin/fullcalendar/fullcalendar.js') }}\"></script>
+<script>
+
+  \$(document).ready(function() {
+
+    \$('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+      },
+
+      navLinks: true, // can click day/week names to navigate views
+      events: [
+\t\t\t\t\t{% for timeslot in listTimeSlot %}
+\t\t\t\t\t\t{
+\t\t\t\t\t\t
+\t\t\t\t\t\t\t
+\t\t\t\t\t\t\t{% if timeslot.conseille == user.username %}
+\t\t\t\t\t\t\t\t//ses propre timeslot
+\t\t\t\t\t\t\t\t\t
+\t\t\t\t\t\t\t\t\t\tstart: '{{ timeslot.date|date('Y-m-d\\\\TH:i:s') }}',
+\t\t\t\t\t\t\t\t\t\tend: '{{ timeslot.date|date('Y-m-d\\\\TH:i:s') }}',
+\t\t\t\t\t\t\t\t\t\tbackgroundColor: '#00B2ED',
+\t\t\t\t\t\t\t\t\t\tborderColor : '#00B2ED',
+\t\t\t\t\t\t\t\t\t\ttextColor: 'white',
+\t\t\t\t\t\t\t{% endif %}
+\t\t\t\t\t\t},
+\t\t\t\t\t{% endfor %}
+\t\t\t\t]
+    });
+
+  });
+
+</script>
+<table class=\"table table-hover\" id=\"table-timeslot\">
 \t\t\t<thead>
 \t\t\t\t<tr>
 \t\t\t\t\t<th scope=\"col\">#</th>
@@ -247,9 +414,8 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 \t\t\t</tbody>
 \t\t</table>
 
-
 {% endblock %}
 
-", "PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\symfony\\reconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\viewTimeSlot.html.twig");
+", "PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\ReconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\viewTimeSlot.html.twig");
     }
 }

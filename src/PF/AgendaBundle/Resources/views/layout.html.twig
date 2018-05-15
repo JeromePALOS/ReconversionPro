@@ -5,12 +5,19 @@
 
 
 
+{% block stylesheets %}
+	
+	<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.css') }}" rel='stylesheet' />
+	<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
+	{{ parent() }}
+{% endblock %}
 	
 
 
 {% block body %}
 
-	
-	
+<h1>Coucou</h1>	
+	<script src="{{ asset('assets/js/jquery.3.3.1.js') }}"></script>
+    <script src="{{ asset('assets/plugin/fullcalendar/moment.min.js') }}"></script>
 {% endblock %}
 
