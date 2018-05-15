@@ -20,7 +20,14 @@ class TimeSlot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+	
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Rdv", mappedBy="timeslot")
+	 */
+	 private $rdv;
 
+	 
 	/**
 	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\User")
 	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE"))
@@ -72,4 +79,28 @@ class TimeSlot
     }
 
  
+
+    /**
+     * Set conseille
+     *
+     * @param \PF\AgendaBundle\Entity\User $conseille
+     *
+     * @return TimeSlot
+     */
+    public function setConseille(\PF\AgendaBundle\Entity\User $conseille)
+    {
+        $this->conseille = $conseille;
+
+        return $this;
+    }
+
+    /**
+     * Get conseille
+     *
+     * @return \PF\AgendaBundle\Entity\User
+     */
+    public function getConseille()
+    {
+        return $this->conseille;
+    }
 }

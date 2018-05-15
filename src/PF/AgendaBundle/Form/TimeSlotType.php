@@ -17,7 +17,6 @@ class TimeSlotType extends AbstractType
     {
         $builder
 			->add('date')
-			->add('conseille',     		textType::class)
 			->add('Add',     		SubmitType::class)
 		;
 		

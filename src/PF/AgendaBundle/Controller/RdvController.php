@@ -9,7 +9,7 @@ use PF\AgendaBundle\Entity\Rdv;
 
 class RdvController extends Controller
 {
-	public function addRdvAction(Request $request, $idtimeslot, $typeRdv)
+	public function addRdvAction(Request $request, $idtimeslot, $typerdv)
 	{
 		
 		
@@ -27,9 +27,10 @@ class RdvController extends Controller
 	
 	
 		$timeslot = $em->getRepository('PFAgendaBundle:TimeSlot')->find($idtimeslot);
+		//$user = $em->getRepository('PFAgendaBundle:User')->find(->getId());
 		
 		$rdv->setTimeSlot($timeslot);
-		$rdv->setTypeRdv($typeRdv);
+		$rdv->setTypeRdv($typerdv);
 		$rdv->setStatus('En attente');
 		$rdv->setCandidat($this->getUser());
 		
@@ -38,17 +39,7 @@ class RdvController extends Controller
 		
 		$request->getSession()->getFlashBag()->add('notice', 'Rendez-vous enregistré');
 
-		return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' =>                  ));
-
-		
-		
-		
-		
-		$message='';
-		return $this->render('PFAgendaBundle:Rdv:addRdv.html.twig',
-			array(
-			)
-		);
+		return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeslot->getConseille()->getId(), ));
 	}
 
 	

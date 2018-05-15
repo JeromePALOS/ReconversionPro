@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-	{{dump(user)}}
+
 		<table class="table table-hover" id="table-timeslot">
 			<thead>
 				<tr>
@@ -23,10 +23,19 @@
 							{{ timeslot.date|date('d/m/Y H:i') }}
 						</td>
 						<td>
-							
+							{% if timeslot.rdv|length > 0 %}
+								{% for rdv in timeslot.rdv %}
+									{% if rdv.candidat == user %}
+										{{ rdv.status }}
+									{% endif %}
+									
+								{% endfor %}
+							{% else %}
+								<a class="btn-blue" aria-label="reserve this time slot" href="{{ path('pf_agenda_add_rdv', {'idtimeslot': timeslot.id, 'typerdv': 'skype' }) }}">Reserve Skype</a>
+							{% endif %}
 						</td>
 					
-					</tr>
+					</tr>{{ dump(timeslot)}}
 				{% endfor %}			
 
 			</tbody>

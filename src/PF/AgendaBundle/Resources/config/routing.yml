@@ -10,5 +10,7 @@ pf_agenda_view_timeslot:
     path: /timeslot/viewtimeslot/{conseille}
     defaults: { _controller: PFAgendaBundle:TimeSlot:viewTimeSlot }
     
-    
+pf_agenda_add_rdv:
+    path: /rdv/addrdv/{idtimeslot}/{typerdv}
+    defaults: { _controller: PFAgendaBundle:Rdv:addRdv }
     

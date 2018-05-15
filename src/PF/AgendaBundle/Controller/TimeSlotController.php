@@ -11,9 +11,6 @@ class TimeSlotController extends Controller
 {
 	public function addTimeSlotAction(Request $request)
 	{
-		
-		
-		
 		//if user is conseiller
 		
 		
@@ -32,6 +29,7 @@ class TimeSlotController extends Controller
 
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($timeSlot);
+				$timeSlot->setConseille($this->getUser());
 				$em->flush();
 				$request->getSession()->getFlashBag()->add('notice', 'Nouveau patient enregistré.');
 
@@ -61,9 +59,11 @@ class TimeSlotController extends Controller
 			)
 		;
 		
+		
+		
 		return $this->render('PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig', array(
-		  'listTimeSlot' => $listTimeSlot,
-		  'user' => $this->getUser(),
+			'listTimeSlot' => $listTimeSlot,
+			'user' => $this->getUser(),
 		));
     }
 	

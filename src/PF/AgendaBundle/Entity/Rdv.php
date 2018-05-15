@@ -20,9 +20,10 @@ class Rdv
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+	 
+	 
 	/**
-	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\TimeSlot")
+	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\TimeSlot", inversedBy="ordonnance")
 	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE"))
 	 */
 	private $timeslot;

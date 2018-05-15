@@ -3,6 +3,7 @@
 namespace PF\AgendaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * TimeSlot
@@ -12,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TimeSlot
 {
+	
+	public function __construct(){
+		$this->rdv = new ArrayCollection();
+	}
+	
     /**
      * @var int
      *
@@ -20,7 +26,14 @@ class TimeSlot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+	
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Rdv", mappedBy="timeslot")
+	 */
+	 private $rdv;
 
+	 
 	/**
 	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\User")
 	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE"))
@@ -35,6 +48,7 @@ class TimeSlot
     private $date;
 
 
+	
     /**
      * Get id
      *
@@ -96,4 +110,29 @@ class TimeSlot
     {
         return $this->conseille;
     }
+
+
+
+	
+	
+	
+	
+	 public function addRdv(Rdv $rdv)
+	{
+		$this->rdv[] = $rdv;
+		$rdv->setTimeSlot($this);
+
+		return $this;
+	}
+
+	public function removeRdv(Rdv $rdv)
+	{
+		$this->rdv->removeElement($rdv);
+		$rdv->setTimeSlot(null);
+	}
+
+	public function getRdv()
+	{
+		return $this->rdv;
+	}
 }
