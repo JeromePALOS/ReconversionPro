@@ -10,7 +10,23 @@ pf_agenda_view_timeslot:
     path: /timeslot/viewtimeslot/{conseille}
     defaults: { _controller: PFAgendaBundle:TimeSlot:viewTimeSlot }
     
+pf_agenda_delete_timeslot:
+    path: /timeslot/deletetimeslot/{idtimeslot}
+    defaults: { _controller: PFAgendaBundle:TimeSlot:deleteTimeSlot }
+    
+pf_agenda_view_rdv:
+    path: /rdv/viewrdv
+    defaults: { _controller: PFAgendaBundle:Rdv:viewRdv }
+    
 pf_agenda_add_rdv:
     path: /rdv/addrdv/{idtimeslot}/{typerdv}
     defaults: { _controller: PFAgendaBundle:Rdv:addRdv }
     
+    
+pf_agenda_edit_rdv:
+    path: /rdv/editrdv/{idrdv}
+    defaults: { _controller: PFAgendaBundle:Rdv:editRdv }
+    
+pf_agenda_delete_rdv:
+    path: /rdv/deleterdv/{idrdv}
+    defaults: { _controller: PFAgendaBundle:Rdv:deleteRdv }
