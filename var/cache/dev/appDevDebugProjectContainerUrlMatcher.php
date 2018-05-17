@@ -123,19 +123,53 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             }
             not_pf_agenda_home:
 
-            // pf_agenda_add_timeslot
-            if ('/agenda/timeslot/addtimeslot' === $pathinfo) {
-                return array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::addTimeSlotAction',  '_route' => 'pf_agenda_add_timeslot',);
+            if (0 === strpos($pathinfo, '/agenda/timeslot')) {
+                // pf_agenda_add_timeslot
+                if ('/agenda/timeslot/addtimeslot' === $pathinfo) {
+                    return array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::addTimeSlotAction',  '_route' => 'pf_agenda_add_timeslot',);
+                }
+
+                // pf_agenda_view_timeslot
+                if (0 === strpos($pathinfo, '/agenda/timeslot/viewtimeslot') && preg_match('#^/agenda/timeslot/viewtimeslot/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::viewTimeSlotAction',));
+                }
+
+                // pf_agenda_delete_timeslot
+                if (0 === strpos($pathinfo, '/agenda/timeslot/deletetimeslot') && preg_match('#^/agenda/timeslot/deletetimeslot/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_delete_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::deleteTimeSlotAction',));
+                }
+
             }
 
-            // pf_agenda_view_timeslot
-            if (0 === strpos($pathinfo, '/agenda/timeslot/viewtimeslot') && preg_match('#^/agenda/timeslot/viewtimeslot/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::viewTimeSlotAction',));
-            }
+            elseif (0 === strpos($pathinfo, '/agenda/rdv')) {
+                // pf_agenda_view_rdv
+                if (0 === strpos($pathinfo, '/agenda/rdv/viewrdv') && preg_match('#^/agenda/rdv/viewrdv/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::viewRdvAction',));
+                }
 
-            // pf_agenda_add_rdv
-            if (0 === strpos($pathinfo, '/agenda/rdv/addrdv') && preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvAction',));
+                if (0 === strpos($pathinfo, '/agenda/rdv/addrdv')) {
+                    // pf_agenda_add_rdv
+                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvAction',));
+                    }
+
+                    // pf_agenda_add_rdv_sans_type
+                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv_sans_type')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvSansTypeAction',));
+                    }
+
+                }
+
+                // pf_agenda_edit_rdv
+                if (0 === strpos($pathinfo, '/agenda/rdv/editrdv') && preg_match('#^/agenda/rdv/editrdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_edit_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::editRdvAction',));
+                }
+
+                // pf_agenda_delete_rdv
+                if (0 === strpos($pathinfo, '/agenda/rdv/deleterdv') && preg_match('#^/agenda/rdv/deleterdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_delete_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::deleteRdvAction',));
+                }
+
             }
 
         }

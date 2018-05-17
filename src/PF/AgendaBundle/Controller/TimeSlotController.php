@@ -33,7 +33,7 @@ class TimeSlotController extends Controller
 				$em->flush();
 				$request->getSession()->getFlashBag()->add('notice', 'Nouveau patient enregistré.');
 
-				return $this->redirectToRoute('pf_agenda_home');
+				return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeSlot->getConseille()->getId() ));
 			}
 		}
 		$message='';
@@ -67,7 +67,37 @@ class TimeSlotController extends Controller
 		));
     }
 	
-	
+	public function deleteTimeSlotAction(Request $request, $idtimeslot){
+		$em = $this->getDoctrine()->getManager();
+
+		$timeslot = $em->getRepository('PFAgendaBundle:TimeSlot')->find($idtimeslot);
+		
+		if (null === $timeslot) {
+			throw new NotFoundHttpException("timeslot incconu");
+		}elseif($timeslot->getConseille()->getId() != $this->getUser()->getId()){
+			throw new NotFoundHttpException("Ce n'est pas votre créneaux horaire");
+			
+		}
+
+		// On crée un formulaire vide, qui ne contiendra que le champ CSRF
+		// Cela permet de protéger la suppression d'annonce contre cette faille
+		$form = $this->get('form.factory')->create();
+
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		  
+			$em->remove($timeslot);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Créneaux horaire supprimé.');
+
+			return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeslot->getConseille()->getId() ));
+		}
+		
+		return $this->render('PFAgendaBundle:TimeSlot:deleteTimeSlot.html.twig', array(
+			'timeslot' => $timeslot,
+			'form'   => $form->createView(),
+		));
+	}
 	
 	
 	
