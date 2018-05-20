@@ -21,50 +21,11 @@
 {% endblock %}
 {% block body %}
 {{parent()}}
-
-  <div id='calendar'></div>
-
-
-
-
-<script src="{{ asset('assets/plugin/fullcalendar/moment.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.3.3.1.js') }}"></script>
-<script src="{{ asset('assets/plugin/fullcalendar/fullcalendar.js') }}"></script>
-<script>
-
-  $(document).ready(function() {
-
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay,listWeek'
-      },
-
-      navLinks: true, // can click day/week names to navigate views
-      events: [
-					{% for timeslot in listTimeSlot %}
-						{
-						
-							
-							{% if timeslot.conseille == user.username %}
-								//ses propre timeslot
-									
-										start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
-										end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
-										backgroundColor: '#00B2ED',
-										borderColor : '#00B2ED',
-										textColor: 'white',
-							{% endif %}
-						},
-					{% endfor %}
-				]
-    });
-
-  });
-
-</script>
-<table class="table table-hover" id="table-timeslot">
+	
+	<h1 title="A vos risques et périls...🌈" id="btn_mystere" class="red">Calendrier 📅</h1>
+			{# lien vers route add timeslot#}
+		<a class="btn-blue" href="{{ path('pf_agenda_add_timeslot') }}">Ajouter un créneau horaire <span id="clock"> </span></a>
+		<table class="table table-hover" id="table-timeslot">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
@@ -80,23 +41,70 @@
 							{{ timeslot.date|date('d/m/Y H:i') }}
 						</td>
 						<td>
-							{% if timeslot.rdv|length > 0 %}
-								{% for rdv in timeslot.rdv %}
-									{% if rdv.candidat == user %}
-										{{ rdv.status }}
-									{% endif %}
-									
-								{% endfor %}
-							{% else %}
-								<a class="btn-blue" aria-label="reserve this time slot" href="{{ path('pf_agenda_add_rdv', {'idtimeslot': timeslot.id, 'typerdv': 'skype' }) }}">Reserve Skype</a>
-							{% endif %}
+
+								{# lien vers route delete timeslot#}
+						<a class="btn-del" href="{{ path('pf_agenda_delete_timeslot', {'idtimeslot': timeslot.id, }) }}">❌</a>		
+								
+							
 						</td>
 					
-					</tr>{{ dump(timeslot)}}
+					</tr>
 				{% endfor %}			
 
 			</tbody>
 		</table>
+		<div id='calendar'></div>
+		
+		
+	<script src="{{ asset('assets/plugin/fullcalendar/moment.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.3.3.1.js') }}"></script>
+	<script src="{{ asset('assets/plugin/fullcalendar/fullcalendar.js') }}"></script>
+	<script src="{{ asset('assets/plugin/fullcalendar/locale-all.js') }}"></script>
+	<script>
+	
+	  $(document).ready(function() {
+		var currentdate = new Date(); 
+		var hours = currentdate.getHours();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		clock = '&#x1F55' + (hours-1).toString(16); 
+		
+		$('#clock').html(clock)
+		
+		
+		$('#btn_mystere').click(function() {
+			$("body").toggleClass("colorz");		
+			$("#calendar").toggleClass("turn");		
+		});
+		$('#calendar').fullCalendar({
+		locale: 'fr',
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay,listWeek'
+		  },
+		  navLinks: true, // can click day/week names to navigate views
+		  events: [
+						{% for timeslot in listTimeSlot %}
+							{
+							
+								
+								{% if timeslot.conseille == user.username %}
+									//ses propre timeslot
+										
+											start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+											end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+											backgroundColor: '#00B2ED',
+											borderColor : '#00B2ED',
+											textColor: 'white',
+								{% endif %}
+							},
+						{% endfor %}
+					]
+		});
+	  });
+	</script>
+
 
 {% endblock %}
-
