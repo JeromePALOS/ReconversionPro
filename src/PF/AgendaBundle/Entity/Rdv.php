@@ -23,7 +23,7 @@ class Rdv
 	 
 	 
 	/**
-	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\TimeSlot", inversedBy="ordonnance")
+	 * @ORM\ManyToOne(targetEntity="PF\AgendaBundle\Entity\TimeSlot", inversedBy="rdv")
 	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE"))
 	 */
 	private $timeslot;
