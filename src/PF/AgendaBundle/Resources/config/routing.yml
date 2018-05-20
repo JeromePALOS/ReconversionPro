@@ -15,16 +15,20 @@ pf_agenda_delete_timeslot:
     defaults: { _controller: PFAgendaBundle:TimeSlot:deleteTimeSlot }
     
 pf_agenda_view_rdv:
+
     path: /rdv/viewrdv/{conseille}
+
     defaults: { _controller: PFAgendaBundle:Rdv:viewRdv }
     
 pf_agenda_add_rdv:
     path: /rdv/addrdv/{idtimeslot}/{typerdv}
     defaults: { _controller: PFAgendaBundle:Rdv:addRdv }
     
+
 pf_agenda_add_rdv_sans_type:
     path: /rdv/addrdv/{idtimeslot}
     defaults: { _controller: PFAgendaBundle:Rdv:addRdvSansType }
+
     
 pf_agenda_edit_rdv:
     path: /rdv/editrdv/{idrdv}

@@ -40,6 +40,7 @@ class RdvController extends Controller
 		return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeslot->getConseille()->getId(), ));
 	}
 	
+
 	public function addRdvSansTypeAction(Request $request, $idtimeslot){
 
 	
@@ -75,11 +76,13 @@ class RdvController extends Controller
 			)
 		);
 	}
+
 	
 	
 	
 	
 	
+
 	public function viewRdvAction(Request $request, $conseille){
 
 		$em = $this->getDoctrine()->getManager();
@@ -186,6 +189,7 @@ class RdvController extends Controller
 		  
 			$em->remove($rdv);
 			$em->flush();
+
 
 			$request->getSession()->getFlashBag()->add('notice', 'Rendez-vous supprimé.');
 

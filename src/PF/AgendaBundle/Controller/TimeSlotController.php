@@ -33,7 +33,9 @@ class TimeSlotController extends Controller
 				$em->flush();
 				$request->getSession()->getFlashBag()->add('notice', 'Nouveau patient enregistré.');
 
+
 				return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeSlot->getConseille()->getId() ));
+
 			}
 		}
 		$message='';
