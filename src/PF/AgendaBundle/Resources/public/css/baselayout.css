@@ -1,0 +1,18 @@
+.red{
+		background-color:red;
+}
+
+h2{
+	padding-bottom: 45px;
+}
+h3{
+	padding-top: 45px;
+}
+
+a:link{text-decoration:none}
+
+
+#calendar{
+	margin-top: 45px;
+	
+}

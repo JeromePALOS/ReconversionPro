@@ -12,14 +12,11 @@
 {% block stylesheets %}
 
 {{parent()}}
-<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.css') }}" rel='stylesheet' />
-<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
-
-
-
 
 {% endblock %}
-{% block body %}
+
+
+{% block content %}
 {{parent()}}
 		<table class="table table-hover" id="table-timeslot">
 			<thead>
@@ -27,7 +24,9 @@
 					<th scope="col">#</th>
 					<th scope="col">Date</th>
 					<th scope="col">Conseillé</th>
+					<th scope="col">Type</th>
 					<th scope="col">Statut</th>
+					<th scope="col">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,9 +37,15 @@
 							{{ rdv.timeslot.date|date('d/m/Y H:i') }}
 						</td>
 						<td>{{ rdv.timeslot.conseille }}</td>
+						<td>{{ rdv.typeRDV }}</td>
 						<td>
 							{{ rdv.status }}
 						</td>
+						<td>
+							<a class="btn-del" href="{{ path('pf_agenda_edit_rdv', {'idrdv': rdv.id, }) }}">✏️</a>	
+							<a class="btn-del" href="{{ path('pf_agenda_delete_rdv', {'idrdv': rdv.id, }) }}">❌</a>	
+						</td>
+						
 					
 					</tr>
 				{% endfor %}			
@@ -49,34 +54,46 @@
 		</table>
 		
 		
-  <div id='calendar'></div>
+		<h3>Réserver un rendez-vous</h3>
+		
+		<div id='calendar'></div>
+{% endblock %}
 
 
 
-<script src="{{ asset('assets/plugin/fullcalendar/moment.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.3.3.1.js') }}"></script>
-<script src="{{ asset('assets/plugin/fullcalendar/fullcalendar.js') }}"></script>
-<script>
+{% block javascripts %}	
+{{parent()}}
+	<script>
 
-  $(document).ready(function() {
+	  $(document).ready(function() {
 
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay,listWeek'
-      },
+		$('#calendar').fullCalendar({
+		  header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		  },
 
-      navLinks: true, // can click day/week names to navigate views
-      events: [
-					{% for timeslot in listTimeSlot %}
-						{
-							
-								{% if timeslot.rdv|length > 0 %}
-									{% for rdv in timeslot.rdv %}
-										{% if rdv.status != 'Validate' %}
-								//ses propre timeslot
-									
+		  navLinks: true, // can click day/week names to navigate views
+		  events: [
+						{% for timeslot in listTimeSlot %}
+							{
+								
+									{% if timeslot.rdv|length > 0 %}
+										{% for rdv in timeslot.rdv %}
+											{% if rdv.status != 'Validate' %}
+									//ses propre timeslot
+										
+												start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+												end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
+												backgroundColor: '#00B2ED',
+												borderColor : '#00B2ED',
+												textColor: 'white',
+												title: '[{{timeslot.conseille}}] Click to reserve',
+												url: '{{ path('pf_agenda_add_rdv_sans_type', { 'idtimeslot': timeslot.id }) }}',
+											{% endif %}
+										{% endfor %}
+									{% else %}
 											start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
 											end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
 											backgroundColor: '#00B2ED',
@@ -84,27 +101,17 @@
 											textColor: 'white',
 											title: '[{{timeslot.conseille}}] Click to reserve',
 											url: '{{ path('pf_agenda_add_rdv_sans_type', { 'idtimeslot': timeslot.id }) }}',
-										{% endif %}
-									{% endfor %}
-								{% else %}
-										start: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
-										end: '{{ timeslot.date|date('Y-m-d\\TH:i:s') }}',
-										backgroundColor: '#00B2ED',
-										borderColor : '#00B2ED',
-										textColor: 'white',
-										title: 'click to reserve',
-										url: '{{ path('pf_agenda_add_rdv_sans_type', { 'idtimeslot': timeslot.id }) }}',
-								{% endif %}		
-							
-						},
-					{% endfor %}
-				]
-    });
+									{% endif %}		
+								
+							},
+						{% endfor %}
+					]
+		});
 
-  });
+	  });
 
-</script>
-
-
+	</script>
 {% endblock %}
+
+
 

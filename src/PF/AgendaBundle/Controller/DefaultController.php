@@ -15,6 +15,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
 		
-        return $this->render('PFAgendaBundle:Default:index.html.twig');
+       return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => 1));
     }
 }

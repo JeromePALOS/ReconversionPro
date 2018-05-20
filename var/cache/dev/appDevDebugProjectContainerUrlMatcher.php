@@ -142,8 +142,12 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             }
 
             elseif (0 === strpos($pathinfo, '/agenda/rdv')) {
-                // pf_agenda_view_rdv
+                // pf_agenda_status_rdv
+                if (0 === strpos($pathinfo, '/agenda/rdv/statusrdv') && preg_match('#^/agenda/rdv/statusrdv/(?P<idrdv>[^/]++)/(?P<status>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_status_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::statusRdvAction',));
+                }
 
+                // pf_agenda_view_rdv
                 if (0 === strpos($pathinfo, '/agenda/rdv/viewrdv') && preg_match('#^/agenda/rdv/viewrdv/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::viewRdvAction',));
                 }
@@ -158,7 +162,6 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                     if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv_sans_type')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvSansTypeAction',));
                     }
-
 
                 }
 

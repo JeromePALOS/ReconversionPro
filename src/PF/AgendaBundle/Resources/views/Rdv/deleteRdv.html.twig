@@ -6,14 +6,14 @@
 	Supprimer Rdv| {{ parent() }} 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
-  <h2>Delete a project</h2>
+	<h2>Delete a project</h2>
 
     <p> Supprimer votre rendez-vous ?  </p>
 
 
-  <form action="{{ path('pf_agenda_delete_timeslot', {'idrdv': rdv.id}) }}" method="post">
+  <form action="{{ path('pf_agenda_delete_rdv', {'idrdv': rdv.id}) }}" method="post">
     <a href="{{ path('pf_agenda_view_timeslot', {'conseille': rdv.timeslot.conseille.id}) }}" class="btn btn-default">
       < Back
     </a>

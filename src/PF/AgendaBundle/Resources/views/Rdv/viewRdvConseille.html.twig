@@ -12,22 +12,29 @@
 {% block stylesheets %}
 
 {{parent()}}
-<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.css') }}" rel='stylesheet' />
-<link href="{{ asset('assets/plugin/fullcalendar/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
-
-
 
 
 {% endblock %}
-{% block body %}
-{{parent()}}
+
+
+
+{% block content %}
+	{{parent()}}
+	
+
+		<a class="btn-del" href="{{ path('pf_agenda_view_timeslot', {'conseille': user.id, }) }}">Gerer ses créneaux horaire</a>	
+
+
+		
+	
 		<table class="table table-hover" id="table-timeslot">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Date</th>
-					<th scope="col">Conseillé</th>
+					<th scope="col">Candidat</th>
 					<th scope="col">Statut</th>
+					<th scope="col">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -39,10 +46,18 @@
 								{{ rdv.timeslot.date|date('d/m/Y H:i') }}
 							</td>
 							<td>{{ rdv.candidat }}</td>
+							<td>{{ rdv.status }}</td>
 							<td>
-								{{ rdv.status }}
+								{% if rdv.status == 'En attente' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}">✅ Validate</a>	
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}">❌ Refuse</a>	
+								{% elseif rdv.status == 'Validate' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}">❌ Refuse</a>	
+								{% elseif rdv.status == 'Refuse' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}">✅ Validate</a>	
+								{% endif %}	
 							</td>
-						
+							
 						</tr>
 					{% endif %}	
 				{% endfor %}			

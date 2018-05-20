@@ -6,6 +6,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use PF\AgendaBundle\Entity\Rdv;
 use PF\AgendaBundle\Form\RdvType;
 use PF\AgendaBundle\Form\RdvEditType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class RdvController extends Controller
@@ -116,10 +120,10 @@ class RdvController extends Controller
 					array('conseille' => $conseille)
 				)
 			;
-			
+
 			
 
-						return $this->render('PFAgendaBundle:Rdv:viewRdv.html.twig', array(
+			return $this->render('PFAgendaBundle:Rdv:viewRdv.html.twig', array(
 				'listTimeSlot' => $listTimeSlot,
 				'listRdv' => $listRdv,
 				'user' => $this->getUser(),
@@ -159,7 +163,7 @@ class RdvController extends Controller
 			$em->flush();
 			$request->getSession()->getFlashBag()->add('notice', 'Rendz-vous modifé.');
 
-			return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $rdv->getTimeSlot()->getConseille()->getId() ));
+			return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $rdv->getTimeSlot()->getConseille()->getId() ));
 		}
 
 		return $this->render('PFAgendaBundle:Rdv:editRdv.html.twig', array(
@@ -178,7 +182,6 @@ class RdvController extends Controller
 			throw new NotFoundHttpException("rdv incconu");
 		}elseif($rdv->getCandidat()->getId() != $this->getUser()->getId()){
 			throw new NotFoundHttpException("Ce n'est pas votre rendez-vous");
-			
 		}
 
 		// On crée un formulaire vide, qui ne contiendra que le champ CSRF
@@ -193,7 +196,7 @@ class RdvController extends Controller
 
 			$request->getSession()->getFlashBag()->add('notice', 'Rendez-vous supprimé.');
 
-			return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $rdv->getTimeSlot()->getConseille()->getId() ));
+			return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $rdv->getTimeSlot()->getConseille()->getId() ));
 		}
 		
 		return $this->render('PFAgendaBundle:Rdv:deleteRdv.html.twig', array(
@@ -202,6 +205,20 @@ class RdvController extends Controller
 		));
 	}
 	
+	public function statusRdvAction(Request $request, $idrdv, $status){
+		$em = $this->getDoctrine()->getManager();
+		$rdv = $em->getRepository('PFAgendaBundle:Rdv')->find($idrdv);
+		
+		if (null === $rdv) {
+			throw new NotFoundHttpException("rdv incconu");
+		}elseif($rdv->getTimeSlot()->getConseille()->getId() != $this->getUser()->getId()){
+			throw new NotFoundHttpException("Ce n'est pas votre rendez-vous");
+		}
+		$rdv->setStatus($status);
+		$em->flush();
+		$request->getSession()->getFlashBag()->add('notice', 'Rendz-vous modifé.');
+		return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $this->getUser()->getId() ));
+	}
 	
 
 	
