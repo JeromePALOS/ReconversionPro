@@ -143,13 +143,23 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
             elseif (0 === strpos($pathinfo, '/agenda/rdv')) {
                 // pf_agenda_view_rdv
-                if ('/agenda/rdv/viewrdv' === $pathinfo) {
-                    return array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::viewRdvAction',  '_route' => 'pf_agenda_view_rdv',);
+
+                if (0 === strpos($pathinfo, '/agenda/rdv/viewrdv') && preg_match('#^/agenda/rdv/viewrdv/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::viewRdvAction',));
                 }
 
-                // pf_agenda_add_rdv
-                if (0 === strpos($pathinfo, '/agenda/rdv/addrdv') && preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvAction',));
+                if (0 === strpos($pathinfo, '/agenda/rdv/addrdv')) {
+                    // pf_agenda_add_rdv
+                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvAction',));
+                    }
+
+                    // pf_agenda_add_rdv_sans_type
+                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv_sans_type')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvSansTypeAction',));
+                    }
+
+
                 }
 
                 // pf_agenda_edit_rdv

@@ -102,6 +102,6 @@ class __TwigTemplate_f7463b411a2ee4e3ecbc92185d0dbb69c74b43d1e9bbd25554bf3500be4
 {% endfor %}
 </pre>
 {% endif %}
-", "@Twig/Exception/traces.txt.twig", "C:\\Program Files (x86)\\Ampps\\www\\ReconversionPro\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\TwigBundle\\Resources\\views\\Exception\\traces.txt.twig");
+", "@Twig/Exception/traces.txt.twig", "C:\\Program Files (x86)\\Ampps\\www\\symfony\\reconversionPro\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\TwigBundle\\Resources\\views\\Exception\\traces.txt.twig");
     }
 }

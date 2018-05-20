@@ -40,23 +40,102 @@ class RdvController extends Controller
 		return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeslot->getConseille()->getId(), ));
 	}
 	
-	public function viewRdvAction(Request $request){
+
+	public function addRdvSansTypeAction(Request $request, $idtimeslot){
+
+	
+		$em = $this->getDoctrine()->getManager();
+		$rdv = new Rdv();
+		$timeslot = $em->getRepository('PFAgendaBundle:TimeSlot')->find($idtimeslot);
+		
+		$form = $this->createForm(RdvType::class, $rdv);
+		
+		if ($request->isMethod('POST')){
+		
+			$form->handleRequest($request);
+		
+			if ($form->isValid()) {
+
+				$em->persist($rdv);
+				
+				$rdv->setStatus('En attente');
+				$rdv->setTimeSlot($timeslot);
+				$rdv->setCandidat($this->getUser());
+				
+				$em->flush();
+				$request->getSession()->getFlashBag()->add('notice', 'Rendez-vous enregistré');
+
+				return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $timeslot->getConseille()->getId()));
+			}
+		}
+		$message='';
+		return $this->render('PFAgendaBundle:Rdv:addRdv.html.twig',
+			array(
+				'form' => $form->createView(),
+				'message' => $message
+			)
+		);
+	}
+
+	
+	
+	
+	
+	
+
+	public function viewRdvAction(Request $request, $conseille){
 
 		$em = $this->getDoctrine()->getManager();
-	
-		$listRdv = $em
-			->getRepository('PFAgendaBundle:Rdv')
-			->findBy(
-				array('date' => 'asc')
+		
+		if ($this->getUser()->hasRole('ROLE_ADMIN')){
+			$listRdv = $em
+				->getRepository('PFAgendaBundle:Rdv')
+				->findAll(
+			
+				)
+			;
+			return $this->render('PFAgendaBundle:Rdv:viewRdvConseille.html.twig', array(
+				'listRdv' => $listRdv,
+				'user' => $this->getUser(),
+				
+			));
+			
+			
+			
+		}else{
+			$listRdv = $em
+				->getRepository('PFAgendaBundle:Rdv')
+				->findBy(
+					array('candidat' => $this->getUser()->getId())
 			)
-		;
+			;
+			
+			$listTimeSlot = $em
+				->getRepository('PFAgendaBundle:TimeSlot')
+				->findBy(
+					array('conseille' => $conseille)
+				)
+			;
+			
+			
+
+						return $this->render('PFAgendaBundle:Rdv:viewRdv.html.twig', array(
+				'listTimeSlot' => $listTimeSlot,
+				'listRdv' => $listRdv,
+				'user' => $this->getUser(),
+				'conseille'=> $conseille,
+				
+			));
+			
+			
+			
+			
+		}
+		//
 		
 		
 		
-		return $this->render('PFAgendaBundle:Rdv:viewRdv.html.twig', array(
-			'listRdv' => $listRdv,
-			'user' => $this->getUser(),
-		));
+		
     }
 
 	
@@ -110,6 +189,7 @@ class RdvController extends Controller
 		  
 			$em->remove($rdv);
 			$em->flush();
+
 
 			$request->getSession()->getFlashBag()->add('notice', 'Rendez-vous supprimé.');
 

@@ -81,6 +81,6 @@ class __TwigTemplate_70f73f8f1b378d38fd7b88ba86b1579ae866ef84864d044fc4da1eaf7f8
 \t<div>
 \t\t{{ form(form) }}
 \t</div>
-\t<p><a href=\"\">Retour</a></p>", "PFAgendaBundle:TimeSlot:addTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\ReconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\addTimeSlot.html.twig");
+\t<p><a href=\"\">Retour</a></p>", "PFAgendaBundle:TimeSlot:addTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\symfony\\reconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\addTimeSlot.html.twig");
     }
 }

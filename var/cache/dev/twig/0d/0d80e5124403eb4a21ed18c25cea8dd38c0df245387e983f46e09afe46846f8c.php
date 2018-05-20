@@ -150,7 +150,7 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 \t\t\t\t\t\t\t
 \t\t\t\t\t\t\t";
             // line 50
-            if (($this->getAttribute($context["timeslot"], "conseille", array()) == $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "username", array()))) {
+            if (($this->getAttribute($this->getAttribute($context["timeslot"], "conseille", array()), "id", array()) == $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "id", array()))) {
                 // line 51
                 echo "\t\t\t\t\t\t\t\t//ses propre timeslot
 \t\t\t\t\t\t\t\t\t
@@ -363,7 +363,7 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 \t\t\t\t\t\t{
 \t\t\t\t\t\t
 \t\t\t\t\t\t\t
-\t\t\t\t\t\t\t{% if timeslot.conseille == user.username %}
+\t\t\t\t\t\t\t{% if timeslot.conseille.id == user.id %}
 \t\t\t\t\t\t\t\t//ses propre timeslot
 \t\t\t\t\t\t\t\t\t
 \t\t\t\t\t\t\t\t\t\tstart: '{{ timeslot.date|date('Y-m-d\\\\TH:i:s') }}',
@@ -416,6 +416,6 @@ class __TwigTemplate_8bab85ea8941304d2b154bd93e58b4bf2aa1f6dfd0917999e765b5ca3c5
 
 {% endblock %}
 
-", "PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\ReconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\viewTimeSlot.html.twig");
+", "PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig", "C:\\Program Files (x86)\\Ampps\\www\\symfony\\reconversionPro\\src\\PF\\AgendaBundle\\Resources\\views\\TimeSlot\\viewTimeSlot.html.twig");
     }
 }
