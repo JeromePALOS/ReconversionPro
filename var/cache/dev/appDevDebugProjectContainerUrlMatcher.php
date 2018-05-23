@@ -107,73 +107,186 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
-        elseif (0 === strpos($pathinfo, '/agenda')) {
-            // pf_agenda_home
-            if ('/agenda' === $trimmedPathinfo) {
-                $ret = array (  '_controller' => 'PF\\AgendaBundle\\Controller\\DefaultController::indexAction',  '_route' => 'pf_agenda_home',);
-                if ('/' === substr($pathinfo, -1)) {
-                    // no-op
-                } elseif ('GET' !== $canonicalMethod) {
-                    goto not_pf_agenda_home;
-                } else {
-                    return array_replace($ret, $this->redirect($rawPathinfo.'/', 'pf_agenda_home'));
-                }
-
-                return $ret;
-            }
-            not_pf_agenda_home:
-
-            if (0 === strpos($pathinfo, '/agenda/timeslot')) {
-                // pf_agenda_add_timeslot
-                if ('/agenda/timeslot/addtimeslot' === $pathinfo) {
-                    return array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::addTimeSlotAction',  '_route' => 'pf_agenda_add_timeslot',);
-                }
-
-                // pf_agenda_view_timeslot
-                if (0 === strpos($pathinfo, '/agenda/timeslot/viewtimeslot') && preg_match('#^/agenda/timeslot/viewtimeslot/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::viewTimeSlotAction',));
-                }
-
-                // pf_agenda_delete_timeslot
-                if (0 === strpos($pathinfo, '/agenda/timeslot/deletetimeslot') && preg_match('#^/agenda/timeslot/deletetimeslot/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_delete_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::deleteTimeSlotAction',));
-                }
-
+        // pf_agenda_home
+        if ('' === $trimmedPathinfo) {
+            $ret = array (  '_controller' => 'PF\\AgendaBundle\\Controller\\DefaultController::indexAction',  '_route' => 'pf_agenda_home',);
+            if ('/' === substr($pathinfo, -1)) {
+                // no-op
+            } elseif ('GET' !== $canonicalMethod) {
+                goto not_pf_agenda_home;
+            } else {
+                return array_replace($ret, $this->redirect($rawPathinfo.'/', 'pf_agenda_home'));
             }
 
-            elseif (0 === strpos($pathinfo, '/agenda/rdv')) {
+            return $ret;
+        }
+        not_pf_agenda_home:
+
+        if (0 === strpos($pathinfo, '/timeslot')) {
+            // pf_agenda_add_timeslot
+            if ('/timeslot/addtimeslot' === $pathinfo) {
+                return array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::addTimeSlotAction',  '_route' => 'pf_agenda_add_timeslot',);
+            }
+
+            // pf_agenda_view_timeslot
+            if (0 === strpos($pathinfo, '/timeslot/viewtimeslot') && preg_match('#^/timeslot/viewtimeslot/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::viewTimeSlotAction',));
+            }
+
+            // pf_agenda_delete_timeslot
+            if (0 === strpos($pathinfo, '/timeslot/deletetimeslot') && preg_match('#^/timeslot/deletetimeslot/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_delete_timeslot')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\TimeSlotController::deleteTimeSlotAction',));
+            }
+
+        }
+
+        elseif (0 === strpos($pathinfo, '/r')) {
+            if (0 === strpos($pathinfo, '/rdv')) {
                 // pf_agenda_status_rdv
-                if (0 === strpos($pathinfo, '/agenda/rdv/statusrdv') && preg_match('#^/agenda/rdv/statusrdv/(?P<idrdv>[^/]++)/(?P<status>[^/]++)$#sD', $pathinfo, $matches)) {
+                if (0 === strpos($pathinfo, '/rdv/statusrdv') && preg_match('#^/rdv/statusrdv/(?P<idrdv>[^/]++)/(?P<status>[^/]++)$#sD', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_status_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::statusRdvAction',));
                 }
 
                 // pf_agenda_view_rdv
-                if (0 === strpos($pathinfo, '/agenda/rdv/viewrdv') && preg_match('#^/agenda/rdv/viewrdv/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
+                if (0 === strpos($pathinfo, '/rdv/viewrdv') && preg_match('#^/rdv/viewrdv/(?P<conseille>[^/]++)$#sD', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_view_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::viewRdvAction',));
                 }
 
-                if (0 === strpos($pathinfo, '/agenda/rdv/addrdv')) {
+                if (0 === strpos($pathinfo, '/rdv/addrdv')) {
                     // pf_agenda_add_rdv
-                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                    if (preg_match('#^/rdv/addrdv/(?P<idtimeslot>[^/]++)/(?P<typerdv>[^/]++)$#sD', $pathinfo, $matches)) {
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvAction',));
                     }
 
                     // pf_agenda_add_rdv_sans_type
-                    if (preg_match('#^/agenda/rdv/addrdv/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
+                    if (preg_match('#^/rdv/addrdv/(?P<idtimeslot>[^/]++)$#sD', $pathinfo, $matches)) {
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_add_rdv_sans_type')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::addRdvSansTypeAction',));
                     }
 
                 }
 
                 // pf_agenda_edit_rdv
-                if (0 === strpos($pathinfo, '/agenda/rdv/editrdv') && preg_match('#^/agenda/rdv/editrdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                if (0 === strpos($pathinfo, '/rdv/editrdv') && preg_match('#^/rdv/editrdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_edit_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::editRdvAction',));
                 }
 
                 // pf_agenda_delete_rdv
-                if (0 === strpos($pathinfo, '/agenda/rdv/deleterdv') && preg_match('#^/agenda/rdv/deleterdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
+                if (0 === strpos($pathinfo, '/rdv/deleterdv') && preg_match('#^/rdv/deleterdv/(?P<idrdv>[^/]++)$#sD', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'pf_agenda_delete_rdv')), array (  '_controller' => 'PF\\AgendaBundle\\Controller\\RdvController::deleteRdvAction',));
                 }
+
+            }
+
+            elseif (0 === strpos($pathinfo, '/register')) {
+                // fos_user_registration_register
+                if ('/register' === $trimmedPathinfo) {
+                    $ret = array (  '_controller' => 'fos_user.registration.controller:registerAction',  '_route' => 'fos_user_registration_register',);
+                    if ('/' === substr($pathinfo, -1)) {
+                        // no-op
+                    } elseif ('GET' !== $canonicalMethod) {
+                        goto not_fos_user_registration_register;
+                    } else {
+                        return array_replace($ret, $this->redirect($rawPathinfo.'/', 'fos_user_registration_register'));
+                    }
+
+                    if (!in_array($canonicalMethod, array('GET', 'POST'))) {
+                        $allow = array_merge($allow, array('GET', 'POST'));
+                        goto not_fos_user_registration_register;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_registration_register:
+
+                // fos_user_registration_check_email
+                if ('/register/check-email' === $pathinfo) {
+                    $ret = array (  '_controller' => 'fos_user.registration.controller:checkEmailAction',  '_route' => 'fos_user_registration_check_email',);
+                    if (!in_array($canonicalMethod, array('GET'))) {
+                        $allow = array_merge($allow, array('GET'));
+                        goto not_fos_user_registration_check_email;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_registration_check_email:
+
+                if (0 === strpos($pathinfo, '/register/confirm')) {
+                    // fos_user_registration_confirm
+                    if (preg_match('#^/register/confirm/(?P<token>[^/]++)$#sD', $pathinfo, $matches)) {
+                        $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_registration_confirm')), array (  '_controller' => 'fos_user.registration.controller:confirmAction',));
+                        if (!in_array($canonicalMethod, array('GET'))) {
+                            $allow = array_merge($allow, array('GET'));
+                            goto not_fos_user_registration_confirm;
+                        }
+
+                        return $ret;
+                    }
+                    not_fos_user_registration_confirm:
+
+                    // fos_user_registration_confirmed
+                    if ('/register/confirmed' === $pathinfo) {
+                        $ret = array (  '_controller' => 'fos_user.registration.controller:confirmedAction',  '_route' => 'fos_user_registration_confirmed',);
+                        if (!in_array($canonicalMethod, array('GET'))) {
+                            $allow = array_merge($allow, array('GET'));
+                            goto not_fos_user_registration_confirmed;
+                        }
+
+                        return $ret;
+                    }
+                    not_fos_user_registration_confirmed:
+
+                }
+
+            }
+
+            elseif (0 === strpos($pathinfo, '/resetting')) {
+                // fos_user_resetting_request
+                if ('/resetting/request' === $pathinfo) {
+                    $ret = array (  '_controller' => 'fos_user.resetting.controller:requestAction',  '_route' => 'fos_user_resetting_request',);
+                    if (!in_array($canonicalMethod, array('GET'))) {
+                        $allow = array_merge($allow, array('GET'));
+                        goto not_fos_user_resetting_request;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_resetting_request:
+
+                // fos_user_resetting_reset
+                if (0 === strpos($pathinfo, '/resetting/reset') && preg_match('#^/resetting/reset/(?P<token>[^/]++)$#sD', $pathinfo, $matches)) {
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_resetting_reset')), array (  '_controller' => 'fos_user.resetting.controller:resetAction',));
+                    if (!in_array($canonicalMethod, array('GET', 'POST'))) {
+                        $allow = array_merge($allow, array('GET', 'POST'));
+                        goto not_fos_user_resetting_reset;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_resetting_reset:
+
+                // fos_user_resetting_send_email
+                if ('/resetting/send-email' === $pathinfo) {
+                    $ret = array (  '_controller' => 'fos_user.resetting.controller:sendEmailAction',  '_route' => 'fos_user_resetting_send_email',);
+                    if (!in_array($requestMethod, array('POST'))) {
+                        $allow = array_merge($allow, array('POST'));
+                        goto not_fos_user_resetting_send_email;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_resetting_send_email:
+
+                // fos_user_resetting_check_email
+                if ('/resetting/check-email' === $pathinfo) {
+                    $ret = array (  '_controller' => 'fos_user.resetting.controller:checkEmailAction',  '_route' => 'fos_user_resetting_check_email',);
+                    if (!in_array($canonicalMethod, array('GET'))) {
+                        $allow = array_merge($allow, array('GET'));
+                        goto not_fos_user_resetting_check_email;
+                    }
+
+                    return $ret;
+                }
+                not_fos_user_resetting_check_email:
 
             }
 
@@ -277,119 +390,6 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 return $ret;
             }
             not_fos_user_change_password:
-
-        }
-
-        elseif (0 === strpos($pathinfo, '/register')) {
-            // fos_user_registration_register
-            if ('/register' === $trimmedPathinfo) {
-                $ret = array (  '_controller' => 'fos_user.registration.controller:registerAction',  '_route' => 'fos_user_registration_register',);
-                if ('/' === substr($pathinfo, -1)) {
-                    // no-op
-                } elseif ('GET' !== $canonicalMethod) {
-                    goto not_fos_user_registration_register;
-                } else {
-                    return array_replace($ret, $this->redirect($rawPathinfo.'/', 'fos_user_registration_register'));
-                }
-
-                if (!in_array($canonicalMethod, array('GET', 'POST'))) {
-                    $allow = array_merge($allow, array('GET', 'POST'));
-                    goto not_fos_user_registration_register;
-                }
-
-                return $ret;
-            }
-            not_fos_user_registration_register:
-
-            // fos_user_registration_check_email
-            if ('/register/check-email' === $pathinfo) {
-                $ret = array (  '_controller' => 'fos_user.registration.controller:checkEmailAction',  '_route' => 'fos_user_registration_check_email',);
-                if (!in_array($canonicalMethod, array('GET'))) {
-                    $allow = array_merge($allow, array('GET'));
-                    goto not_fos_user_registration_check_email;
-                }
-
-                return $ret;
-            }
-            not_fos_user_registration_check_email:
-
-            if (0 === strpos($pathinfo, '/register/confirm')) {
-                // fos_user_registration_confirm
-                if (preg_match('#^/register/confirm/(?P<token>[^/]++)$#sD', $pathinfo, $matches)) {
-                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_registration_confirm')), array (  '_controller' => 'fos_user.registration.controller:confirmAction',));
-                    if (!in_array($canonicalMethod, array('GET'))) {
-                        $allow = array_merge($allow, array('GET'));
-                        goto not_fos_user_registration_confirm;
-                    }
-
-                    return $ret;
-                }
-                not_fos_user_registration_confirm:
-
-                // fos_user_registration_confirmed
-                if ('/register/confirmed' === $pathinfo) {
-                    $ret = array (  '_controller' => 'fos_user.registration.controller:confirmedAction',  '_route' => 'fos_user_registration_confirmed',);
-                    if (!in_array($canonicalMethod, array('GET'))) {
-                        $allow = array_merge($allow, array('GET'));
-                        goto not_fos_user_registration_confirmed;
-                    }
-
-                    return $ret;
-                }
-                not_fos_user_registration_confirmed:
-
-            }
-
-        }
-
-        elseif (0 === strpos($pathinfo, '/resetting')) {
-            // fos_user_resetting_request
-            if ('/resetting/request' === $pathinfo) {
-                $ret = array (  '_controller' => 'fos_user.resetting.controller:requestAction',  '_route' => 'fos_user_resetting_request',);
-                if (!in_array($canonicalMethod, array('GET'))) {
-                    $allow = array_merge($allow, array('GET'));
-                    goto not_fos_user_resetting_request;
-                }
-
-                return $ret;
-            }
-            not_fos_user_resetting_request:
-
-            // fos_user_resetting_reset
-            if (0 === strpos($pathinfo, '/resetting/reset') && preg_match('#^/resetting/reset/(?P<token>[^/]++)$#sD', $pathinfo, $matches)) {
-                $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_resetting_reset')), array (  '_controller' => 'fos_user.resetting.controller:resetAction',));
-                if (!in_array($canonicalMethod, array('GET', 'POST'))) {
-                    $allow = array_merge($allow, array('GET', 'POST'));
-                    goto not_fos_user_resetting_reset;
-                }
-
-                return $ret;
-            }
-            not_fos_user_resetting_reset:
-
-            // fos_user_resetting_send_email
-            if ('/resetting/send-email' === $pathinfo) {
-                $ret = array (  '_controller' => 'fos_user.resetting.controller:sendEmailAction',  '_route' => 'fos_user_resetting_send_email',);
-                if (!in_array($requestMethod, array('POST'))) {
-                    $allow = array_merge($allow, array('POST'));
-                    goto not_fos_user_resetting_send_email;
-                }
-
-                return $ret;
-            }
-            not_fos_user_resetting_send_email:
-
-            // fos_user_resetting_check_email
-            if ('/resetting/check-email' === $pathinfo) {
-                $ret = array (  '_controller' => 'fos_user.resetting.controller:checkEmailAction',  '_route' => 'fos_user_resetting_check_email',);
-                if (!in_array($canonicalMethod, array('GET'))) {
-                    $allow = array_merge($allow, array('GET'));
-                    goto not_fos_user_resetting_check_email;
-                }
-
-                return $ret;
-            }
-            not_fos_user_resetting_check_email:
 
         }
 

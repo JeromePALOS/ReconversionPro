@@ -116,9 +116,7 @@ class RdvController extends Controller
 			
 			$listTimeSlot = $em
 				->getRepository('PFAgendaBundle:TimeSlot')
-				->findBy(
-					array('conseille' => $conseille)
-				)
+				->findAll()
 			;
 
 			

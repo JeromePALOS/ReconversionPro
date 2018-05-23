@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class TimeSlotType extends AbstractType
 {
@@ -16,7 +17,7 @@ class TimeSlotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('date')
+			->add('date', DateTimeType::class, array( 'years' => range(2018,2030)))
 			->add('Add',     		SubmitType::class)
 		;
 		

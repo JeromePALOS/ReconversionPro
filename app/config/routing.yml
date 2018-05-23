@@ -1,6 +1,6 @@
 pf_bundle:
     resource: "@PFAgendaBundle/Resources/config/routing.yml"
-    prefix:   /agenda
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'

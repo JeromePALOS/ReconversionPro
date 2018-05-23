@@ -65,7 +65,7 @@
 			</tbody>
 		</table>
 		
-		
+		<div id='calendar'></div>
 
 
 
@@ -75,3 +75,39 @@
 
 {% endblock %}
 
+{% block javascripts %}	
+{{parent()}}
+	<script>
+
+	  $(document).ready(function() {
+
+		$('#calendar').fullCalendar({
+		  header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		  },
+			locale: 'fr',
+		  navLinks: true, // can click day/week names to navigate views
+		  events: [
+					{% for rdv in listRdv%}
+						{% if rdv.timeslot.conseille.id == user.id %}
+							{
+										
+								start: '{{ rdv.timeslot.date|date('Y-m-d\\TH:i:s') }}',
+								end: '{{ rdv.timeslot.date|date('Y-m-d\\TH:i:s') }}',
+								backgroundColor: '#00B2ED',
+								borderColor : '#00B2ED',
+								textColor: 'white',
+								title: '[{{rdv.candidat}}] {{ rdv.typeRDV }} - {{ rdv.status }}',
+								
+							},
+						{% endif %}
+					{% endfor %}
+				]
+		});
+
+	  });
+
+	</script>
+{% endblock %}
