@@ -20,7 +20,11 @@
 
 {% block content %}
 	{{parent()}}
-	
+		{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
 
 		<a class="btn-del" href="{{ path('pf_agenda_view_timeslot', {'conseille': user.id, }) }}">Gerer ses créneaux horaire</a>	
 
@@ -46,15 +50,28 @@
 								{{ rdv.timeslot.date|date('d/m/Y H:i') }}
 							</td>
 							<td>{{ rdv.candidat }}</td>
-							<td>{{ rdv.status }}</td>
 							<td>
 								{% if rdv.status == 'En attente' %}
-									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}">✅ Validate</a>	
-									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}">❌ Refuse</a>	
+								
 								{% elseif rdv.status == 'Validate' %}
-									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}">❌ Refuse</a>	
+								✅
 								{% elseif rdv.status == 'Refuse' %}
-									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}">✅ Validate</a>	
+								❌
+								{% endif %}	
+								{{ rdv.status }}
+								
+							</td>
+							
+							
+							
+							<td>
+								{% if rdv.status == 'En attente' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}"> Validate</a>	
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}"> Refuse</a>	
+								{% elseif rdv.status == 'Validate' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Refuse' }) }}"> Refuse</a>	
+								{% elseif rdv.status == 'Refuse' %}
+									<a class="btn-del" href="{{ path('pf_agenda_status_rdv', {'idrdv': rdv.id, 'status': 'Validate' }) }}"> Validate</a>	
 								{% endif %}	
 							</td>
 							
@@ -96,8 +113,17 @@
 										
 								start: '{{ rdv.timeslot.date|date('Y-m-d\\TH:i:s') }}',
 								end: '{{ rdv.timeslot.date|date('Y-m-d\\TH:i:s') }}',
-								backgroundColor: '#00B2ED',
-								borderColor : '#00B2ED',
+								{% if rdv.status == 'En attente' %}
+									backgroundColor: '#00B2ED',
+									borderColor : '#00B2ED',
+								{% elseif rdv.status == 'Validate' %}
+									backgroundColor: '#59a454',
+									borderColor : '#59a454',
+								{% elseif rdv.status == 'Refuse' %}
+									backgroundColor: '#850808',
+									borderColor : '#850808',
+								{% endif %}
+
 								textColor: 'white',
 								title: '[{{rdv.candidat}}] {{ rdv.typeRDV }} - {{ rdv.status }}',
 								

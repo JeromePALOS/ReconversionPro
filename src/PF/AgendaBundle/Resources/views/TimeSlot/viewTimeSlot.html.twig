@@ -18,7 +18,11 @@
 {% endblock %}
 {% block content %}
 {{parent()}}
-	
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
 
 		<div class="row">
 			<a class="btn-del" href="{{ path('pf_agenda_view_rdv', {'conseille': user.id, }) }}"><span id="clock"> </span> Voir ses rendez-vous </a>	

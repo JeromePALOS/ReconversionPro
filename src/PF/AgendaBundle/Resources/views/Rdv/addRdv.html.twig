@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
+	
 	<h2> Add Rdv</h2>
 	<p> {{ include("PFAgendaBundle:Rdv:formRdv.html.twig") }}</p>
 {% endblock %}

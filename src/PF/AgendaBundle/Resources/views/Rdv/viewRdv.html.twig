@@ -18,6 +18,11 @@
 
 {% block content %}
 {{parent()}}
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
 		<table class="table table-hover" id="table-timeslot">
 			<thead>
 				<tr>
@@ -39,6 +44,13 @@
 						<td>{{ rdv.timeslot.conseille }}</td>
 						<td>{{ rdv.typeRDV }}</td>
 						<td>
+							{% if rdv.status == 'En attente' %}
+							
+							{% elseif rdv.status == 'Validate' %}
+							✅
+							{% elseif rdv.status == 'Refuse' %}
+							❌
+							{% endif %}	
 							{{ rdv.status }}
 						</td>
 						<td>
@@ -55,7 +67,14 @@
 		
 		
 		<h3>Réserver un rendez-vous</h3>
-		
+		<p>
+			Voir un conseillé : 
+			{% for conseille in listconseille %}
+				<a class="lien-conseille" href="{{ path('pf_agenda_view_rdv', {'conseille': conseille.id }) }}">{{ conseille.username }}</a>
+			{% endfor %}	
+				<a class="lien-conseille" href="{{ path('pf_agenda_view_rdv', {'conseille': "all" }) }}">ALL</a>
+				
+		</p>
 		<div id='calendar'></div>
 {% endblock %}
 
@@ -75,10 +94,10 @@
 		  },
 		locale: 'fr',
 		  navLinks: true, // can click day/week names to navigate views
-		  events: [
+		  events: [	
+				
 						{% for timeslot in listTimeSlot %}
 							{
-								
 									{% if timeslot.rdv|length > 0 %}
 										{% for rdv in timeslot.rdv %}
 											{% if rdv.status != 'Validate' %}
@@ -102,7 +121,7 @@
 											title: '[{{timeslot.conseille}}] Click to reserve',
 											url: '{{ path('pf_agenda_add_rdv_sans_type', { 'idtimeslot': timeslot.id }) }}',
 									{% endif %}		
-								
+						
 							},
 						{% endfor %}
 					]

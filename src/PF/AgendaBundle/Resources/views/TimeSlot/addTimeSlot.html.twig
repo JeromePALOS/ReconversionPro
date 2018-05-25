@@ -1,4 +1,19 @@
-{# src/ON/CabinetMedicalBundle/Resources/views/Patient/ajouter.html.twig #}
+
+{% extends "PFAgendaBundle::layout.html.twig" %}
+
+{% block title %}
+	Ajouter Timeslot | {{ parent() }} 
+{% endblock %}
+
+	
+
+{% block content %}	
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
+	
 	<h3>Ajouter un créneaux horaire</h3>
 	{% if message %}
 		<p>{{ message }}</p>
@@ -6,4 +21,5 @@
 	<div>
 		{{ form(form) }}
 	</div>
-	<p><a href="">Retour</a></p>
+	<p><a href="{{ path('pf_agenda_view_timeslot', {'conseille': app.user.id}) }}">Retour</a></p>
+{% endblock %}	

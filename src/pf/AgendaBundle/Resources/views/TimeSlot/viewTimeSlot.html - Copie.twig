@@ -21,7 +21,12 @@
 {% endblock %}
 {% block body %}
 {{parent()}}
-
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
+	
   <div id='calendar'></div>
 
 

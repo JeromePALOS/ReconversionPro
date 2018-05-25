@@ -8,6 +8,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PF\AgendaBundle\Repository\UserRepository")
  * @ORM\Table(name="pf_agenda_user")
  */
 class User extends BaseUser

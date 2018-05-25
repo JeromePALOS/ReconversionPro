@@ -10,4 +10,17 @@ namespace PF\AgendaBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+	
+	public function getRoleConseille($role)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('u')
+			->from('PFAgendaBundle:User', 'u')
+			->where($qb->expr()->orX(
+				$qb->expr()->like('u.roles', ':roles')
+			))
+			->setParameter('roles', $role);
+
+		return $qb->getQuery()->getResult();
+	}
 }

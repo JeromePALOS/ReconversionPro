@@ -9,10 +9,32 @@ h3{
 	padding-top: 45px;
 }
 
-a:link{text-decoration:none}
-
+a:link, a:focus, a:hover {text-decoration:none}
 
 #calendar{
 	margin-top: 45px;
+}
+
+.notice {
+    padding: 3px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    margin-bottom: 20px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+       -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+            box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
 	
+}
+
+.lien-conseille{
+	border: black 1px solid;
+	padding: 1px 15px 1px 15px;
+	border-radius: 3px;
+	
+}
+.lien-conseille:hover{
+	border: black 2px solid;
+	padding: 0px 14px 0px 14px;
+	border-radius: 3px;
+	text-decoration:none
 }

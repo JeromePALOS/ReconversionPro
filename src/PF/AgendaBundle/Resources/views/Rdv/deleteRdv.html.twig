@@ -9,12 +9,16 @@
 {% block content %}
 
 	<h2>Delete a project</h2>
-
+		{% for message in app.session.flashbag.get('notice') %}
+		<div class="notice">
+			<strong>Notice</strong> {{ message }}
+		</div>
+	{% endfor %}
     <p> Supprimer votre rendez-vous ?  </p>
 
 
   <form action="{{ path('pf_agenda_delete_rdv', {'idrdv': rdv.id}) }}" method="post">
-    <a href="{{ path('pf_agenda_view_timeslot', {'conseille': rdv.timeslot.conseille.id}) }}" class="btn btn-default">
+    <a href="{{ path('pf_agenda_view_timeslot', {'conseille': "all" }) }}" class="btn btn-default">
       < Back
     </a>
     <input type="submit" value="Supprimer" class="btn-blue" />

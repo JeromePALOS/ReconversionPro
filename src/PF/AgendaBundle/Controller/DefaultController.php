@@ -14,7 +14,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-		
-       return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => 1));
+	$conseille = "all";
+       return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $conseille));
     }
 }

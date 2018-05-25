@@ -3,9 +3,14 @@ namespace PF\AgendaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use PF\AgendaBundle\Entity\Rdv;
+use PF\AgendaBundle\Entity\User;
+
 use PF\AgendaBundle\Form\RdvType;
 use PF\AgendaBundle\Form\RdvEditType;
+
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -86,7 +91,6 @@ class RdvController extends Controller
 	
 	
 	
-
 	public function viewRdvAction(Request $request, $conseille){
 
 		$em = $this->getDoctrine()->getManager();
@@ -94,18 +98,14 @@ class RdvController extends Controller
 		if ($this->getUser()->hasRole('ROLE_ADMIN')){
 			$listRdv = $em
 				->getRepository('PFAgendaBundle:Rdv')
-				->findAll(
-			
-				)
+				->findAll()
 			;
 			return $this->render('PFAgendaBundle:Rdv:viewRdvConseille.html.twig', array(
 				'listRdv' => $listRdv,
 				'user' => $this->getUser(),
-				
 			));
 			
-			
-			
+
 		}else{
 			$listRdv = $em
 				->getRepository('PFAgendaBundle:Rdv')
@@ -113,31 +113,35 @@ class RdvController extends Controller
 					array('candidat' => $this->getUser()->getId())
 			)
 			;
+			$query = $this->getDoctrine()->getEntityManager()
+                       ->createQuery(
+                              'SELECT u FROM PFAgendaBundle:User u WHERE u.roles LIKE :role'
+                        )->setParameter('role', '%"ROLE_ADMIN"%'
+			);
+			$users = $query->getResult();
+			$listconseille = $users;
 			
-			$listTimeSlot = $em
-				->getRepository('PFAgendaBundle:TimeSlot')
-				->findAll()
-			;
-
+			if($conseille == "all"){
+				$listTimeSlot = $em
+					->getRepository('PFAgendaBundle:TimeSlot')
+					->findAll()
+				;
+			}else{
+				$theconseille = $em->getRepository('PFAgendaBundle:User')->find($conseille);
+				
+				$listTimeSlot = $em->getRepository('PFAgendaBundle:TimeSlot')->findByConseille($theconseille);
+			}
+			
 			
 
 			return $this->render('PFAgendaBundle:Rdv:viewRdv.html.twig', array(
 				'listTimeSlot' => $listTimeSlot,
 				'listRdv' => $listRdv,
 				'user' => $this->getUser(),
-				'conseille'=> $conseille,
+				'listconseille'=> $listconseille,
 				
 			));
-			
-			
-			
-			
 		}
-		//
-		
-		
-		
-		
     }
 
 	
@@ -173,8 +177,12 @@ class RdvController extends Controller
 	
 	public function deleteRdvAction(Request $request, $idrdv){
 		$em = $this->getDoctrine()->getManager();
-
+		
 		$rdv = $em->getRepository('PFAgendaBundle:Rdv')->find($idrdv);
+		
+		if ($rdv->getCandidat()->getId() != $this->getUser()->getId()){
+			throw new AccessDeniedException('Vous n\etes pas admin.');
+		}
 		
 		if (null === $rdv) {
 			throw new NotFoundHttpException("rdv incconu");
@@ -204,18 +212,26 @@ class RdvController extends Controller
 	}
 	
 	public function statusRdvAction(Request $request, $idrdv, $status){
+
 		$em = $this->getDoctrine()->getManager();
-		$rdv = $em->getRepository('PFAgendaBundle:Rdv')->find($idrdv);
+		if ($this->getUser()->hasRole('ROLE_USER')){
+
 		
-		if (null === $rdv) {
-			throw new NotFoundHttpException("rdv incconu");
-		}elseif($rdv->getTimeSlot()->getConseille()->getId() != $this->getUser()->getId()){
-			throw new NotFoundHttpException("Ce n'est pas votre rendez-vous");
+			$rdv = $em->getRepository('PFAgendaBundle:Rdv')->find($idrdv);
+			
+			if (null === $rdv) {
+				throw new NotFoundHttpException("rdv incconu");
+			}elseif($rdv->getTimeSlot()->getConseille()->getId() != $this->getUser()->getId()){
+				throw new NotFoundHttpException("Ce n'est pas votre rendez-vous");
+			}
+			$rdv->setStatus($status);
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('notice', 'Rendz-vous modifé.');
+			return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $this->getUser()->getId() ));
+		
+		}else{
+			throw new AccessDeniedException('Vous n\etes pas admin.');
 		}
-		$rdv->setStatus($status);
-		$em->flush();
-		$request->getSession()->getFlashBag()->add('notice', 'Rendz-vous modifé.');
-		return $this->redirectToRoute('pf_agenda_view_rdv', array('conseille' => $this->getUser()->getId() ));
 	}
 	
 

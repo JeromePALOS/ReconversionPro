@@ -3,6 +3,7 @@ namespace PF\AgendaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use PF\AgendaBundle\Entity\TimeSlot;
 use PF\AgendaBundle\Form\TimeSlotType;
 
@@ -11,62 +12,70 @@ class TimeSlotController extends Controller
 {
 	public function addTimeSlotAction(Request $request)
 	{
-		//if user is conseiller
-		
-		
-		//////////////////////////////////
-		
-		
-		$timeSlot = new TimeSlot();
-		
-		$form = $this->createForm(TimeSlotType::class, $timeSlot);
-		
-		if ($request->isMethod('POST')){
-		
-			$form->handleRequest($request);
-		
-			if ($form->isValid()) {
+		$em = $this->getDoctrine()->getManager();
+		if ($this->getUser()->hasRole('ROLE_USER')){
 
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($timeSlot);
-				$timeSlot->setConseille($this->getUser());
-				$em->flush();
-				$request->getSession()->getFlashBag()->add('notice', 'Nouveau patient enregistré.');
+		
+			$timeSlot = new TimeSlot();
+			
+			$form = $this->createForm(TimeSlotType::class, $timeSlot);
+			
+			if ($request->isMethod('POST')){
+			
+				$form->handleRequest($request);
+			
+				if ($form->isValid()) {
+
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($timeSlot);
+					$timeSlot->setConseille($this->getUser());
+					$em->flush();
+					$request->getSession()->getFlashBag()->add('notice', 'Nouveau créneaux horaire enregistré.');
 
 
-				return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeSlot->getConseille()->getId() ));
+					return $this->redirectToRoute('pf_agenda_view_timeslot', array('conseille' => $timeSlot->getConseille()->getId() ));
 
+				}
 			}
+			$message='';
+			return $this->render('PFAgendaBundle:TimeSlot:addTimeSlot.html.twig',
+				array(
+					'form' => $form->createView(),
+					'message' => $message
+				)
+			);
+		
+		}else{
+			throw new AccessDeniedException('Vous n\etes pas admin.');
 		}
-		$message='';
-		return $this->render('PFAgendaBundle:TimeSlot:addTimeSlot.html.twig',
-			array(
-				'form' => $form->createView(),
-				'message' => $message
-			)
-		);
 	}
 	
 	
 	
 	public function viewTimeSlotAction($conseille){
 
+
 		$em = $this->getDoctrine()->getManager();
-	
-		$listTimeSlot = $em
-			->getRepository('PFAgendaBundle:TimeSlot')
-			->findBy(
-				array('conseille' => $conseille), // Critere
-				array('date' => 'asc')
-			)
-		;
-		
-		
-		
-		return $this->render('PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig', array(
-			'listTimeSlot' => $listTimeSlot,
-			'user' => $this->getUser(),
-		));
+		if ($this->getUser()->hasRole('ROLE_ADMIN')){
+				
+			
+			$listTimeSlot = $em
+				->getRepository('PFAgendaBundle:TimeSlot')
+				->findBy(
+					array('conseille' => $conseille), // Critere
+					array('date' => 'asc')
+				)
+			;
+			
+			
+			
+			return $this->render('PFAgendaBundle:TimeSlot:viewTimeSlot.html.twig', array(
+				'listTimeSlot' => $listTimeSlot,
+				'user' => $this->getUser(),
+			));
+		}else{
+			throw new AccessDeniedException('Vous n\etes pas admin.');
+		}
     }
 	
 	public function deleteTimeSlotAction(Request $request, $idtimeslot){
