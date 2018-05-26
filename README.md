@@ -22,7 +22,7 @@ Symfony Agenda Bundle Reconversion Pro
 * parameter.yml a modifier
 	
 ### lien : 	
-* http://localhost/cour%20symfony/reconversionPro/web/app_dev.php/
+* http://localhost/reconversionPro/web/app_dev.php/
 	
 	
 	
