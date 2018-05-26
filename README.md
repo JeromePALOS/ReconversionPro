@@ -13,19 +13,19 @@ Reconversion Pro
 
 
 Compte admin/conseille
-	* username : admin
-	* password : admin
+* username : admin
+* password : admin
 	
 Compte user/client
-	* username : client
-	* password : client
+* username : client
+* password : client
 	
 BDD
-	* reconversionpro.sql
-	* parameter.yml a modifier
+* reconversionpro.sql
+* parameter.yml a modifier
 	
 lien : 	
-	* http://localhost/cour%20symfony/reconversionPro/web/app_dev.php/
+* http://localhost/cour%20symfony/reconversionPro/web/app_dev.php/
 	
 	
 	
