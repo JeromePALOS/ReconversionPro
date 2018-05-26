@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 25 mai 2018 à 19:38
+-- Généré le :  sam. 26 mai 2018 à 15:47
 -- Version du serveur :  10.1.29-MariaDB
 -- Version de PHP :  7.2.0
 
@@ -63,8 +63,9 @@ CREATE TABLE `pf_agenda_rdv` (
 
 INSERT INTO `pf_agenda_rdv` (`id`, `timeslot_id`, `candidat_id`, `typeRDV`, `status`) VALUES
 (2, 3, 1, 'physique', 'Refuse'),
-(3, 7, 5, 'skype', 'Validate'),
-(5, 6, 5, 'skype', 'En attente');
+(3, 7, 5, 'téléphone', 'Validate'),
+(5, 6, 5, 'skype', 'Refuse'),
+(7, 15, 5, 'skype', 'En attente');
 
 -- --------------------------------------------------------
 
@@ -90,10 +91,8 @@ INSERT INTO `pf_agenda_time_slot` (`id`, `conseille_id`, `date`) VALUES
 (6, 3, '2018-06-01 09:00:00'),
 (7, 3, '2018-05-27 17:00:00'),
 (8, 3, '2017-06-29 17:00:00'),
-(9, 3, '2018-06-04 13:00:00'),
-(10, 3, '2018-06-11 16:00:00'),
 (11, 3, '2018-01-11 10:00:00'),
-(12, 3, '2018-01-01 00:00:00');
+(15, 3, '2018-05-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -121,11 +120,11 @@ CREATE TABLE `pf_agenda_user` (
 --
 
 INSERT INTO `pf_agenda_user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`) VALUES
-(1, 'fiquet', 'fiquet', 'fiquet@gmail.com', 'fiquet@gmail.com', 1, NULL, '$2y$13$e3AXHmo883TXbybhxtnL5eGJAnzNbQf/KsDfjQCg6kIEc5kUyRaZK', '2018-05-23 20:57:37', NULL, NULL, 'a:0:{}'),
+(1, 'fiquet', 'fiquet', 'fiquet@gmail.com', 'fiquet@gmail.com', 1, NULL, '$2y$13$e3AXHmo883TXbybhxtnL5eGJAnzNbQf/KsDfjQCg6kIEc5kUyRaZK', '2018-05-23 20:57:37', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}'),
 (2, 'jerome', 'jerome', 'jerome@gmail.com', 'jerome@gmail.com', 1, NULL, '$2y$13$kWQ8XL2vQ82hXIHa/iO2WexANqB4SSBIOoMvpKVpRPUUqSkPJcPhS', '2018-05-23 20:58:56', NULL, NULL, 'a:0:{}'),
-(3, 'admin', 'admin', 'admin@admin.admin', 'admin@admin.admin', 1, NULL, '$2y$13$S7qsvxU7Xhd/dgK8BUssCeb05sM9.DPmOwiWj5R6LdNZe3/Djabt6', '2018-05-25 19:38:09', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}'),
+(3, 'admin', 'admin', 'admin@admin.admin', 'admin@admin.admin', 1, NULL, '$2y$13$S7qsvxU7Xhd/dgK8BUssCeb05sM9.DPmOwiWj5R6LdNZe3/Djabt6', '2018-05-26 15:43:42', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}'),
 (4, 'root', 'root', 'root@root.roor', 'root@root.roor', 1, NULL, '$2y$13$d5Kjca6kDhQOrJOsQJlAmuuYeSft/Pegy.ELod/iRlqXC0.MxcMKe', '2018-05-23 21:23:34', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}'),
-(5, 'client', 'client', 'client@client.com', 'client@client.com', 1, NULL, '$2y$13$wVMNtUZR8Xscd4pom4iEZuBZXHeBcovNv7kIHSpZQ1fz6VFM9W2mG', '2018-05-25 19:36:28', NULL, NULL, 'a:0:{}');
+(5, 'client', 'client', 'client@client.com', 'client@client.com', 1, NULL, '$2y$13$wVMNtUZR8Xscd4pom4iEZuBZXHeBcovNv7kIHSpZQ1fz6VFM9W2mG', '2018-05-26 15:44:39', NULL, NULL, 'a:0:{}');
 
 --
 -- Index pour les tables déchargées
@@ -178,13 +177,13 @@ ALTER TABLE `fos_user`
 -- AUTO_INCREMENT pour la table `pf_agenda_rdv`
 --
 ALTER TABLE `pf_agenda_rdv`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `pf_agenda_time_slot`
 --
 ALTER TABLE `pf_agenda_time_slot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `pf_agenda_user`

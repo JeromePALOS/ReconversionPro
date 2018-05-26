@@ -32,11 +32,10 @@ lien :
 	
 Principe
 
-1/ Admin crÃ©e des crÃ©neaux horaires
-2/ Le client peut rÃ©server sur ses crÃ©neaux horaires
+1/ Admin crée des créneaux horaires
+2/ Le client peut réserver sur ses créneaux horaires
 3/ L'admin peut accepter ou refuser
 
 
 	
-
 
