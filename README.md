@@ -30,7 +30,7 @@ lien :
 	
 	
 	
-#Principe
+## Principe
 
 * 1/ Admin crée des créneaux horaires
 * 2/ Le client peut réserver sur ses créneaux horaires
