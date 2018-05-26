@@ -1,10 +1,5 @@
 Symfony Agenda Bundle Reconversion Pro
 ========================
-Symfony 
-
-Agenda Bundle 
-
-Reconversion Pro
 
 
 * GABIN Fiquet
@@ -12,19 +7,21 @@ Reconversion Pro
 
 
 
-Compte admin/conseille
+### Compte admin/conseille
 * username : admin
 * password : admin
 	
-Compte user/client
+	
+### Compte user/client
 * username : client
 * password : client
 	
-BDD
+	
+### BDD
 * reconversionpro.sql
 * parameter.yml a modifier
 	
-lien : 	
+### lien : 	
 * http://localhost/cour%20symfony/reconversionPro/web/app_dev.php/
 	
 	
